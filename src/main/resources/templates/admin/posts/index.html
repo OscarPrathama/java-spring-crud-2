@@ -1,61 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!-- header -->
 <div th:replace="admin/fragments/header :: header"> </div>
 
 <body>
-    
+
     <!-- navbar -->
     <div th:replace="admin/fragments/navbar :: navbar"></div>
 
     <!-- content -->
     <div class="container my-5">
-        <!-- table -->
-        <div class="row col-md-12">
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">Created at</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>hello world</td>
-                    <td>masgan</td>
-                    <td>22 juni 2021</td>
-                    <td>
-                        <a href="#view">View</a>
-                        <a href="#edit">Edit</a>
-                        <a href="#delete">Delete</a>
-                    </td>
-                    </tr>
-                    <tr>
-                        <td>hello world</td>
-                        <td>masgan</td>
-                        <td>22 juni 2021</td>
-                        <td>
-                            <a href="#view">View</a>
-                            <a href="#edit">Edit</a>
-                            <a href="#delete">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>hello world</td>
-                        <td>masgan</td>
-                        <td>22 juni 2021</td>
-                        <td>
-                            <a href="#view">View</a>
-                            <a href="#edit">Edit</a>
-                            <a href="#delete">Delete</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <!-- heading -->
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h2>Post Management</h2>
+            </div>
         </div>
+        
+        <!-- utils 1 -->
+        <div class="row my-3">
+            <div class="col-md-2">
+                <a href="/admin/posts/create" class="btn btn-primary">Add new</a>
+            </div>
+            <div class="col-md-7">
+
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-success">Export Excel</button>
+                <button type="button" class="btn btn-danger">Export PDF</button>
+            </div>
+        </div>
+
+        <!-- utils 2 -->
+        <div class="row my-3">
+            <div class="col-md-2">
+                <select name="" id="" class="form-select">
+                    <option value="" selected disabled>Action</option>
+                    <option value="">Delete</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-primary" value="Apply">
+            </div>
+            <div class="col-md-2">
+                <select name="" id="" class="form-select">
+                    <option value="" selected disabled>Filter by month</option>
+                    <option value="">January</option>
+                    <option value="">February</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="" id="" class="form-select">
+                    <option value="" selected disabled>Filter by author</option>
+                    <option value="">Masgan</option>
+                    <option value="">Bukan masgan</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-primary" value="Apply">
+            </div>
+            <div class="col-md-4">
+                <input type="search" class="form-control" placeholder="Search by title/author">
+            </div>
+        </div>
+
+        <!-- status -->
+        <div class="row post-status my-3">
+            <div class="col-md-12">
+                <small>
+                    <a href="" class="text-decoration-none me-2">All (12)</a>
+                    <a href="" class="text-decoration-none me-2">Publish (8)</a>
+                    <a href="" class="text-decoration-none me-2">Draft (4)</a>
+                    <a href="" class="text-decoration-none me-2">Trash (0)</a>
+                </small>
+            </div>
+        </div>
+
+        <!-- table -->
+        <div class="row table-wrapper table-responsive">
+            <div class="col-md-12">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">
+                                <input type="checkbox" name="post_bulk_action_main" id="">
+                            </th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr th:each="post : ${posts}">
+                            <td>
+                                <input type="checkbox" name="post_bulk_action[]" id="">
+                            </td>
+                            <td th:text="${post.postTitle}"></td>
+                            <td>-</td>
+                            <td th:text="${post.createdAt}"></td>
+                            <td>
+                                <a th:href="@{/admin/posts/view/{id}(id=${post.id})}" class="me-3">View</a>
+                                <a th:href="@{/admin/posts/edit/{id}(id=${post.id})}" class="me-3">Edit</a>
+                                <a th:href="@{/admin/posts/delete/{id}(id=${post.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- pagination -->
+        <div class="row pagination-wrapper mt-3">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
     </div>
 
     <!-- footer -->
@@ -65,4 +146,5 @@
     <div th:replace="admin/fragments/scripts :: scripts"></div>
 
 </body>
+
 </html>

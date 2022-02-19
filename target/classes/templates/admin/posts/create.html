@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- header -->
+<div th:replace="admin/fragments/header :: header"> </div>
+
+<body>
+    
+    <!-- navbar -->
+    <div th:replace="admin/fragments/navbar :: navbar"></div>
+
+    <!-- content -->
+    <div class="container my-5">
+
+        <!-- heading -->
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h2>Create post</h2>
+            </div>
+        </div>
+
+        <!-- content -->
+        <form action="#" method="POST" th:action="@{/admin/posts/store}" th:object="${post}">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="post-title mb-3">
+                        <input 
+                            type="text" name="post_title" class="form-control" placeholder="Post title"
+                            th:field="*{postTitle}" >
+                    </div>
+                    <div class="post-content mb-3">
+                        <textarea 
+                            name="post_content" id="" cols="30" rows="10" placeholder="Post content" class="form-control"
+                            th:field="*{postContent}"
+                            ></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="post-author mb-3">
+                        <input type="text" name="post_author" class="form-control">
+                    </div>
+                    <div class="post-action">
+                        <input type="submit" value="Draft" class="btn btn-success">
+                        <input type="submit" value="Publish" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <!-- footer -->
+    <div th:replace="admin/fragments/footer :: footer"></div>
+
+    <!-- scripts -->
+    <div th:replace="admin/fragments/scripts :: scripts"></div>
+
+</body>
+</html>
