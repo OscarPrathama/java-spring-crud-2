@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("posts")
+@RequestMapping("admin/posts")
 public class PostController {
     
     /**
@@ -16,7 +16,7 @@ public class PostController {
     public String index(Model model){
         model.addAttribute("posts", "hello posts");
         
-        return "admin/users/index";
+        return "admin/posts/index";
     }
 
     /**

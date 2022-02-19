@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- header -->
+<div th:replace="admin/fragments/header :: header"> </div>
+
+<body>
+    
+    <!-- navbar -->
+    <div th:replace="admin/fragments/navbar :: navbar"></div>
+
+    <!-- content -->
+    <div class="container my-5">
+        <!-- table -->
+        <div class="row col-md-12">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>hello world</td>
+                    <td>masgan</td>
+                    <td>22 juni 2021</td>
+                    <td>
+                        <a href="#view">View</a>
+                        <a href="#edit">Edit</a>
+                        <a href="#delete">Delete</a>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>hello world</td>
+                        <td>masgan</td>
+                        <td>22 juni 2021</td>
+                        <td>
+                            <a href="#view">View</a>
+                            <a href="#edit">Edit</a>
+                            <a href="#delete">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>hello world</td>
+                        <td>masgan</td>
+                        <td>22 juni 2021</td>
+                        <td>
+                            <a href="#view">View</a>
+                            <a href="#edit">Edit</a>
+                            <a href="#delete">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="admin/fragments/footer :: footer"></div>
+
+    <!-- scripts -->
+    <div th:replace="admin/fragments/scripts :: scripts"></div>
+
+</body>
+</html>
