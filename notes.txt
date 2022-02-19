@@ -1,0 +1,4 @@
+thymeleaf
+================
+https://stackoverflow.com/questions/36663038/spring-thymeleaf-header-and-footer-dynamic-includes
+https://www.thymeleaf.org/doc/articles/layouts.html
