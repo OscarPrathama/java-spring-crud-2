@@ -62,7 +62,9 @@
                 <input type="submit" class="btn btn-primary" value="Apply">
             </div>
             <div class="col-md-4">
-                <input type="search" class="form-control" placeholder="Search by title/author">
+                <form th:action="@{/admin/posts/search}" method="get">
+                    <input type="search" name="keyword" th:value="${keyword}" class="form-control" placeholder="Search by title">
+                </form>
             </div>
         </div>
 
