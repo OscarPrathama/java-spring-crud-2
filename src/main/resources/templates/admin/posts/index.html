@@ -63,7 +63,9 @@
             </div>
             <div class="col-md-4">
                 <form th:action="@{/admin/posts/search}" method="get">
-                    <input type="search" name="keyword" th:value="${keyword}" class="form-control" placeholder="Search by title">
+                    <input 
+                        type="text" name="keyword" th:value="${keyword}"
+                        class="form-control" placeholder="Search by title">
                 </form>
             </div>
         </div>
@@ -83,7 +85,7 @@
         <!-- table -->
         <div class="row table-wrapper table-responsive">
             <div class="col-md-12">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" th:classappend="${tableClass}">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">

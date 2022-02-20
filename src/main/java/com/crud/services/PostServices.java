@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import com.crud.entities.Post;
 import com.crud.repositories.PostRepository;
+import com.github.slugify.Slugify;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +18,7 @@ public class PostServices {
     PostRepository postRepository;
 
     public Iterable<Post> findAll(){
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public List<Post> search(String keyword){
@@ -27,6 +29,12 @@ public class PostServices {
     }
 
     public void save(Post post){
+        
+        // handle slug
+        Slugify slug = new Slugify();
+        String post_slug = slug.slugify(post.getPostSlug());
+        post.setPostSlug(post_slug);
+
         postRepository.save(post);
     }
 

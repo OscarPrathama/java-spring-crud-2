@@ -2,14 +2,16 @@ package com.crud.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.crud.entities.Post;
 import com.crud.services.PostServices;
-import com.github.slugify.Slugify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,7 +46,8 @@ public class PostController {
         List<Post> searchPosts = postServices.search(keyword);
 
         model.addAttribute("metaTitle", "Search post");
-        model.addAttribute(keyword, keyword);
+        model.addAttribute("tableClass", "posts-table");
+        model.addAttribute("keyword", keyword);
         model.addAttribute("posts", searchPosts);
 
         return "admin/posts/index";
@@ -68,11 +71,11 @@ public class PostController {
      * store
     */
     @PostMapping("/store")
-    public String store(@ModelAttribute("post") Post post) {
-        
-        Slugify slug = new Slugify();
-        String post_slug = slug.slugify(post.getPostTitle());
-        post.setPostSlug(post_slug);
+    public String store(@Valid @ModelAttribute("post") Post post, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "/admin/posts/create";
+        }
 
         postServices.save(post);
 
@@ -98,10 +101,6 @@ public class PostController {
     */
     @PutMapping("update")
     public String update(@ModelAttribute("post") Post post) {
-
-        Slugify slug = new Slugify();
-        String post_slug = slug.slugify(post.getPostTitle());
-        post.setPostSlug(post_slug);
 
         postServices.save(post);
         

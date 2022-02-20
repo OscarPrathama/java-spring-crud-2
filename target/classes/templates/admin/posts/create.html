@@ -25,24 +25,94 @@
                 <div class="col-md-8">
                     <div class="post-title mb-3">
                         <input 
-                            type="text" name="post_title" class="form-control" placeholder="Post title"
+                            type="text" 
+                            class="form-control"
+                            th:classappend="${#fields.hasErrors('postTitle')}? is-invalid"
+                            placeholder="Post title"
                             th:field="*{postTitle}" >
+                        <!-- 
+                            * th:errors="*{postTitle}" for display all errors on the specified selector, i'ts better for email
+                            -->
+                        <small 
+                            th:if="${#fields.hasErrors('postTitle')}"
+                            th:class="${#fields.hasErrors('postTitle')}? invalid-feedback"
+                            th:errors="*{postTitle}">
+                            Post title is required</small>
+                        
+                        <!-- post slug -->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <input 
+                                type="text" name="post_slug" class="form-control" placeholder="Post slug"
+                                th:classappend="${#fields.hasErrors('postSlug')}? is-invalid"
+                                th:field="*{postSlug}">
+                                <small 
+                                    th:if="${#fields.hasErrors('postSlug')}"
+                                    th:class="${#fields.hasErrors('postSlug')}? invalid-feedback"
+                                    th:errors="*{postSlug}">
+                                    Post title is required</small>
+                            </div>
+                        </div>
                     </div>
                     <div class="post-content mb-3">
                         <textarea 
-                            name="post_content" id="" cols="30" rows="10" placeholder="Post content" class="form-control"
+                            id="" cols="30" rows="10" placeholder="Post content" 
+                            class="form-control"
                             th:field="*{postContent}"
                             ></textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
+
+                    <!-- post author -->
                     <div class="post-author mb-3">
-                        <input type="text" name="post_author" class="form-control" placeholder="Post author">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Post author"
+                            >
                     </div>
+
+                    <!-- post status -->
+                    <div class="post-status mb-3">
+                        <h5>Post status</h5>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" th:field="*{postStatus}" value="publish" type="radio" id="publish" checked>
+                            <label class="form-check-label" for="publish">
+                                Publish
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" th:field="*{postStatus}" value="draft" type="radio" id="draft">
+                            <label class="form-check-label" for="draft">
+                                Draft
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- post type -->
+                    <div class="post-type mb-3">
+                        <h5>Post type</h5>
+                        <select class="form-select" th:field="*{postType}">
+                            <option th:value="post" selected>Post</option>
+                            <option th:value="page">Page</option>
+                            <option th:value="product">Product</option>
+                        </select>
+                    </div>
+
+                    <!-- post image -->
+                    <div class="post-image mb-3">
+                        <h5>
+                            <label for="formFile" class="form-label">Post image</label>
+                        </h5>
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+
+                    <!-- post submit -->
                     <div class="post-action">
-                        <input type="submit" value="Draft" class="btn btn-success">
                         <input type="submit" value="Publish" class="btn btn-primary">
                     </div>
+
                 </div>
             </div>
         </form>

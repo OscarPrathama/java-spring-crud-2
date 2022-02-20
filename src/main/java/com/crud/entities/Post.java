@@ -8,9 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,9 +25,15 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Title is required !")
     @Column(nullable = false, length = 100)
     private String postTitle;
 
+    // @NotEmpty(message = "Author is required !")
+    @ManyToOne
+    private User user;
+
+    @NotEmpty(message = "Slug is required !")
     @Column(nullable = false, length = 100, unique = true)
     private String postSlug;
 
@@ -116,6 +124,14 @@ public class Post {
 
     public void setPostStatus(String postStatus) {
         this.postStatus = postStatus;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
