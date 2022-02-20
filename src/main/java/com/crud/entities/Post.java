@@ -29,6 +29,12 @@ public class Post {
     @Column(nullable = false, length = 100, unique = true)
     private String postSlug;
 
+    @Column(nullable = false, length = 50)
+    private String postType = "post";
+
+    @Column(nullable = false, length = 50)
+    private String postStatus = "publish";
+
     @Lob
     @Column(nullable = true)
     private String postContent;
@@ -96,6 +102,20 @@ public class Post {
         this.updatedAt = updatedAt;
     }
 
-    
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
+    public String getPostStatus() {
+        return postStatus;
+    }
+
+    public void setPostStatus(String postStatus) {
+        this.postStatus = postStatus;
+    }
 
 }

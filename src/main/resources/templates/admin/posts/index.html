@@ -91,6 +91,7 @@
                             </th>
                             <th scope="col">Title</th>
                             <th scope="col">Author</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Created at</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -103,12 +104,22 @@
                             </td>
                             <td th:text="${post.postTitle}"></td>
                             <td>-</td>
+                            <td th:text="${post.postStatus}"></td>
                             <td th:text="${post.createdAt}"></td>
                             <td>
                                 <a th:href="@{/admin/posts/view/{id}(id=${post.id})}" class="me-3">View</a>
                                 <a th:href="@{/admin/posts/edit/{id}(id=${post.id})}" class="me-3">Edit</a>
-                                <a th:href="@{/admin/posts/delete/{id}(id=${post.id})}">Delete</a>
+                                <form 
+                                    class="d-inline" th:object="${post}" 
+                                    th:action="@{/admin/posts/delete/{id}(id=${post.id})}" th:method="delete"
+                                    >
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete it ?')">Delete</button>
+                                </form>
                             </td>
+                        </tr>
+
+                        <tr th:unless="${posts}">
+                            <td colspan="5" class="text-center">no data</td>
                         </tr>
                         
                     </tbody>

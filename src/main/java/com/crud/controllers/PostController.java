@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @RequestMapping("admin/posts")
@@ -71,8 +72,6 @@ public class PostController {
         
         Slugify slug = new Slugify();
         String post_slug = slug.slugify(post.getPostTitle());
-        System.out.println("coba "+post_slug);
-        System.out.println("coba "+post.getPostTitle());
         post.setPostSlug(post_slug);
 
         postServices.save(post);
@@ -93,11 +92,27 @@ public class PostController {
 
         return "admin/posts/edit";
     }
+
+    /**
+     * update
+    */
+    @PutMapping("update")
+    public String update(@ModelAttribute("post") Post post) {
+
+        Slugify slug = new Slugify();
+        String post_slug = slug.slugify(post.getPostTitle());
+        post.setPostSlug(post_slug);
+
+        postServices.save(post);
+        
+        return "redirect:/admin/posts/edit/"+post.getId();
+    }
     
     /**
      * delete
     */
-    @GetMapping("/delete/{id}")
+    // @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id") Long id) {
         postServices.delete(id);
         
