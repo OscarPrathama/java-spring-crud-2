@@ -8,6 +8,7 @@ import com.crud.entities.Post;
 import com.crud.services.PostServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,22 +35,8 @@ public class PostController {
     public String index(Model model){
         model.addAttribute("metaTitle", "Posts");
         model.addAttribute("posts", postServices.findAll());
-        System.out.println(postServices.findAll());
 
         return "admin/posts/index";
-    }
-
-    /**
-     * view
-    */
-    @GetMapping("/view/{id}")
-    public String view(@PathVariable( value = "id" ) Long id, Model model){
-        Post post = postServices.getPostById(id);
-
-        model.addAttribute("metaTitle", post.getPostTitle());
-        model.addAttribute("post", post);
-
-        return "admin/posts/view";
     }
 
     /**
@@ -65,6 +52,64 @@ public class PostController {
         model.addAttribute("posts", searchPosts);
 
         return "admin/posts/index";
+    }
+
+    /**
+     * sort
+    */
+    @GetMapping("/{field}")
+    public String getPostsWithSort(Model model, @PathVariable() String field){
+        List<Post> sortedPosts = postServices.findPostWithSorting(field);
+
+        model.addAttribute("metaTitle", "Sorted post");
+        model.addAttribute("field", field);
+        model.addAttribute("posts", sortedPosts);
+
+        return "/admin/posts/index";
+    }
+
+    /**
+     * pagination
+    */
+    @GetMapping("/pagination/{offset}/{pageSize}")
+    public String getPostsWithSort(Model model, @PathVariable int offset, @PathVariable int pageSize){
+        Page<Post> postsWithPagination = postServices.findPostsWithPagination(offset, pageSize);
+
+        model.addAttribute("metaTitle", "Pagination post");
+        model.addAttribute("posts", postsWithPagination);
+
+        return "/admin/posts/index";
+    }
+
+    /**
+     * sort & pagination
+    */
+    @GetMapping("/paginationAndSort/{offset}/{pageSize}/{field}")
+    public String getPostsWithSortAndPagination(
+            Model model, 
+            @PathVariable int offset, 
+            @PathVariable int pageSize,
+            @PathVariable String field
+        ){
+        Page<Post> postsWithPagination = postServices.findPostsWithPaginationAndSorting(offset, pageSize, field);
+
+        model.addAttribute("metaTitle", "Pagination post");
+        model.addAttribute("posts", postsWithPagination);
+
+        return "/admin/posts/index";
+    }
+
+    /**
+     * view
+    */
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable( value = "id" ) Long id, Model model){
+        Post post = postServices.getPostById(id);
+
+        model.addAttribute("metaTitle", post.getPostTitle());
+        model.addAttribute("post", post);
+
+        return "admin/posts/view";
     }
 
     /**

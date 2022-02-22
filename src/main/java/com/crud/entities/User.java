@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
 @Entity
 @Table(
     name = "users",
@@ -61,6 +60,20 @@ public class User {
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
+    public User() {
+    }
+
+    public User(@NotEmpty(message = "name is required !") String name,
+            @NotEmpty(message = "username is required !") String username,
+            @Email @NotEmpty(message = "email is required !") String email,
+            @NotEmpty(message = "password is required !") @Size(min = 8, max = 16) String password, String role) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
     public Long getId() {
         return id;

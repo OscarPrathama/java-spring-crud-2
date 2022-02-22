@@ -59,6 +59,22 @@ public class Post {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    public Post(@NotEmpty(message = "Title is required !") String postTitle, User user,
+            @NotEmpty(message = "Slug is required !") String postSlug, String postType, String postStatus,
+            String postContent, Date createdAt, Date updatedAt) {
+        this.postTitle = postTitle;
+        this.user = user;
+        this.postSlug = postSlug;
+        this.postType = postType;
+        this.postStatus = postStatus;
+        this.postContent = postContent;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Post() {
+    }
+
     @Override
     public String toString() {
         return "Post [createdAt=" + createdAt + ", id=" + id + ", postContent=" + postContent + ", postSlug=" + postSlug

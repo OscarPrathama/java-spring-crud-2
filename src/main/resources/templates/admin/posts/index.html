@@ -91,11 +91,21 @@
                             <th scope="col" class="text-center">
                                 <input type="checkbox" name="post_bulk_action_main" id="">
                             </th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Created at</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col">
+                                <a th:href="@{/admin/posts/postTitle}">Title</a>
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/posts/user}">Author</a>
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/posts/postStatus}">Status</a>
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/posts/createdAt}">Created at</a>
+                            </th>
+                            <th scope="col">
+                                <a href="javascript:void(0)">Actions</a>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
