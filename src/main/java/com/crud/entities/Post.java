@@ -30,6 +30,9 @@ public class Post {
     private String postTitle;
 
     // @NotEmpty(message = "Author is required !")
+    // @ManyToOne(fetch=FetchType.LAZY)
+    // @JoinColumn(name="category_id")
+    // @JoinColumn(name = "userId")
     @ManyToOne
     private User user;
 

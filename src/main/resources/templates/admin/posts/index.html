@@ -64,7 +64,7 @@
             <div class="col-md-4">
                 <form th:action="@{/admin/posts/search}" method="get">
                     <input 
-                        type="text" name="keyword" th:value="${keyword}"
+                        type="search" name="keyword" th:value="${keyword}"
                         class="form-control" placeholder="Search by title">
                 </form>
             </div>
@@ -100,12 +100,12 @@
                     </thead>
                     <tbody>
 
-                        <tr th:each="post : ${posts}">
+                        <tr th:each="post : ${posts}" th:if="${posts}">
                             <td>
                                 <input type="checkbox" name="post_bulk_action[]" id="">
                             </td>
                             <td th:text="${post.postTitle}"></td>
-                            <td>-</td>
+                            <td th:text="${post.user.name}"></td>
                             <td th:text="${post.postStatus}"></td>
                             <td th:text="${post.createdAt}"></td>
                             <td>
@@ -120,8 +120,9 @@
                             </td>
                         </tr>
 
-                        <tr th:unless="${posts}">
-                            <td colspan="5" class="text-center">no data</td>
+                        <!-- belum -->
+                        <tr th:if="${#lists.isEmpty(posts)}">
+                            <td colspan="6" class="text-center">no data</td>
                         </tr>
                         
                     </tbody>

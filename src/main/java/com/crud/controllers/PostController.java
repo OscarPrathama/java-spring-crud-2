@@ -34,8 +34,22 @@ public class PostController {
     public String index(Model model){
         model.addAttribute("metaTitle", "Posts");
         model.addAttribute("posts", postServices.findAll());
+        System.out.println(postServices.findAll());
 
         return "admin/posts/index";
+    }
+
+    /**
+     * view
+    */
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable( value = "id" ) Long id, Model model){
+        Post post = postServices.getPostById(id);
+
+        model.addAttribute("metaTitle", post.getPostTitle());
+        model.addAttribute("post", post);
+
+        return "admin/posts/view";
     }
 
     /**
@@ -79,7 +93,7 @@ public class PostController {
 
         postServices.save(post);
 
-        return "redirect:/admin/posts";
+        return "redirect:/admin/posts/edit/"+post.getId();
     }
     
 
@@ -113,9 +127,14 @@ public class PostController {
     // @GetMapping("/delete/{id}")
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable(value = "id") Long id) {
-        postServices.delete(id);
+
+        try {
+            postServices.delete(id);
+            return "redirect:/admin/posts";
+        } catch (Exception e) {
+            return "Failed to delete";
+        }
         
-        return "redirect:/admin/posts";
     }
 
 }
