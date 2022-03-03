@@ -89,7 +89,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">
-                                <input type="checkbox" name="post_bulk_action_main" id="">
+                                <input type="checkbox" name="bulk_action_main" id="">
                             </th>
                             <th scope="col">
                                 <a th:href="@{/admin/posts/postTitle}">Title</a>
@@ -130,7 +130,6 @@
                             </td>
                         </tr>
 
-                        <!-- belum -->
                         <tr th:if="${#lists.isEmpty(posts)}">
                             <td colspan="6" class="text-center">no data</td>
                         </tr>

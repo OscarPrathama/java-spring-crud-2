@@ -1,12 +1,16 @@
 package com.crud.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +52,9 @@ public class User {
     @Size(min = 8, max = 16)
     @Column(nullable = false, length = 100)
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private List<Post> posts = new ArrayList<>();
 
     @Column(nullable = false, length = 100)
     private String role = "default";
@@ -139,6 +146,12 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
     
 }

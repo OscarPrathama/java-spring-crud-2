@@ -1,10 +1,5 @@
 package com.crud.services;
 
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import javax.annotation.PostConstruct;
-
 import com.crud.entities.User;
 import com.crud.repositories.UserRepository;
 
@@ -13,7 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-// import java.util.Random;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,22 +24,30 @@ public class UserService {
         return userRepository.count();
     }
 
-    /**
-     * this code doesn't work
-    */
-    @PostConstruct
-    public void initDB(){
-        List<User> users = IntStream.rangeClosed(1, 0)
-            .mapToObj(i -> new User(
-                "user "+i, 
-                "admin"+i, 
-                "admin@gmail"+i+".com", 
-                "123qweasd", 
-                "admin"
-                // new Random().nextInt(100)
-            )).collect(Collectors.toList());
-        
-        userRepository.saveAll(users);
+    public List<User> search(String keyword){
+        if(keyword != null){
+            return userRepository.search(keyword);
+        }
+        return userRepository.findAll();
+    }
+
+    public void save(User user){
+        userRepository.save(user);
+    }
+
+    public User getUserById(Long id){
+        Optional<User> optional = userRepository.findById(id);
+        User user = null;
+        if(optional.isPresent()){
+            user = optional.get();
+        }else{
+            throw new RuntimeException("User with id "+id+" not found");
+        }
+        return user;
+    }
+
+    public void delete(Long id){
+        userRepository.deleteById(id);
     }
 
 }
