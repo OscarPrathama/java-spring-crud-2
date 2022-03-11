@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!-- header -->
-<div th:replace="admin/fragments/header :: header"> </div>
+<div th:replace="admin/fragments/header :: header"></div>
 
-<body>
-
+<body th:classappend="${bodyClass}">
+    
     <!-- navbar -->
     <div th:replace="admin/fragments/navbar :: navbar"></div>
 
@@ -22,7 +22,7 @@
         <!-- utils 1 -->
         <div class="row my-3">
             <div class="col-md-2">
-                <a href="/admin/users/create" class="btn btn-primary">Add new</a>
+                <a th:href="@{/admin/users/create}" class="btn btn-primary">Add new</a>
             </div>
             <div class="col-md-7">
 
@@ -63,20 +63,18 @@
             </div>
             <div class="col-md-4">
                 <form th:action="@{/admin/users/search}" method="get">
-                    <input 
-                        type="search" name="keyword" th:value="${keyword}"
-                        class="form-control" placeholder="Search by name">
+                    <input th:value="${keyword}" type="search" name="keyword" class="form-control" placeholder="Search by title">
                 </form>
             </div>
         </div>
 
-        <!-- status -->
-        <div class="row user-status my-3">
+        <!-- roles -->
+        <div class="row roles my-3">
             <div class="col-md-12">
                 <small>
-                    <a href="" class="text-decoration-none me-2">All (<span th:text="${#lists.size(users)}"></span>)</a>
-                    <a href="" class="text-decoration-none me-2">Admin (8)</a>
-                    <a href="" class="text-decoration-none me-2">Editor (4)</a>
+                    <a href="" class="text-decoration-none me-2">Admin</a>
+                    <a href="" class="text-decoration-none me-2">Editor (12)</a>
+                    <a href="" class="text-decoration-none me-2">SEO Auditor (5)</a>
                 </small>
             </div>
         </div>
@@ -97,7 +95,10 @@
                                 <a th:href="@{/admin/users/username}">Username</a>
                             </th>
                             <th scope="col">
-                                <a th:href="@{/admin/users/email}">Email</a>
+                                <a href="javascript:void(0)">Email</a>
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/users/role}">Role</a>
                             </th>
                             <th scope="col">
                                 <a th:href="@{/admin/users/createdAt}">Created at</a>
@@ -116,13 +117,16 @@
                             <td th:text="${user.name}"></td>
                             <td th:text="${user.username}"></td>
                             <td th:text="${user.email}"></td>
+                            <td th:text="${user.role}"></td>
                             <td th:text="${user.createdAt}"></td>
                             <td>
                                 <a th:href="@{/admin/users/view/{id}(id=${user.id})}" class="me-3">View</a>
                                 <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="me-3">Edit</a>
                                 <form 
-                                    class="d-inline" th:object="${user}" 
-                                    th:action="@{/admin/users/delete/{id}(id=${user.id})}" th:method="delete"
+                                    class="d-inline" 
+                                    th:object="${user}" 
+                                    th:action="@{/admin/users/delete/{id}(id=${user.id})}" 
+                                    th:method="delete"
                                     >
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Delete it ?')">Delete</button>
                                 </form>
@@ -170,5 +174,4 @@
     <div th:replace="admin/fragments/scripts :: scripts"></div>
 
 </body>
-
 </html>

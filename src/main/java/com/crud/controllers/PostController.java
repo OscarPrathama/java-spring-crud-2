@@ -35,6 +35,7 @@ public class PostController {
     public String index(Model model){
         model.addAttribute("metaTitle", "Posts");
         model.addAttribute("posts", postServices.findAll());
+        model.addAttribute("bodyClass", "posts-index");
 
         return "admin/posts/index";
     }

@@ -1,1 +1,177 @@
-users index
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- header -->
+<div th:replace="admin/fragments/header :: header"></div>
+
+<body th:classappend="${bodyClass}">
+    
+    <!-- navbar -->
+    <div th:replace="admin/fragments/navbar :: navbar"></div>
+
+    <!-- content -->
+    <div class="container my-5">
+
+        <!-- heading -->
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h2>Users Management</h2>
+            </div>
+        </div>
+        
+        <!-- utils 1 -->
+        <div class="row my-3">
+            <div class="col-md-2">
+                <a th:href="@{/admin/users/create}" class="btn btn-primary">Add new</a>
+            </div>
+            <div class="col-md-7">
+
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-success">Export Excel</button>
+                <button type="button" class="btn btn-danger">Export PDF</button>
+            </div>
+        </div>
+
+        <!-- utils 2 -->
+        <div class="row my-3">
+            <div class="col-md-2">
+                <select name="" id="" class="form-select">
+                    <option value="" selected disabled>Action</option>
+                    <option value="">Delete</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-primary" value="Apply">
+            </div>
+            <div class="col-md-2">
+                <select name="" id="" class="form-select">
+                    <option value="" selected disabled>Filter by month</option>
+                    <option value="">January</option>
+                    <option value="">February</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="" id="" class="form-select">
+                    <option value="" selected disabled>Filter by author</option>
+                    <option value="">Masgan</option>
+                    <option value="">Bukan masgan</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-primary" value="Apply">
+            </div>
+            <div class="col-md-4">
+                <form th:action="@{/admin/users/search}" method="get">
+                    <input th:value="${keyword}" type="search" name="keyword" class="form-control" placeholder="Search by title">
+                </form>
+            </div>
+        </div>
+
+        <!-- roles -->
+        <div class="row roles my-3">
+            <div class="col-md-12">
+                <small>
+                    <a href="" class="text-decoration-none me-2">Admin</a>
+                    <a href="" class="text-decoration-none me-2">Editor (12)</a>
+                    <a href="" class="text-decoration-none me-2">SEO Auditor (5)</a>
+                </small>
+            </div>
+        </div>
+
+        <!-- table -->
+        <div class="row table-wrapper table-responsive">
+            <div class="col-md-12">
+                <table class="table table-bordered table-hover table-striped" th:classappend="${tableClass}">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">
+                                <input type="checkbox" name="bulk_action_main" id="">
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/users/name}">Name</a>
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/users/username}">Username</a>
+                            </th>
+                            <th scope="col">
+                                <a href="javascript:void(0)">Email</a>
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/users/role}">Role</a>
+                            </th>
+                            <th scope="col">
+                                <a th:href="@{/admin/users/createdAt}">Created at</a>
+                            </th>
+                            <th scope="col">
+                                <a href="javascript:void(0)">Actions</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr th:each="user : ${users}" th:if="${users}">
+                            <td>
+                                <input type="checkbox" name="bulk_action[]" id="">
+                            </td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.role}"></td>
+                            <td th:text="${user.createdAt}"></td>
+                            <td>
+                                <a th:href="@{/admin/users/view/{id}(id=${user.id})}" class="me-3">View</a>
+                                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="me-3">Edit</a>
+                                <form 
+                                    class="d-inline" 
+                                    th:object="${user}" 
+                                    th:action="@{/admin/users/delete/{id}(id=${user.id})}" 
+                                    th:method="delete"
+                                    >
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete it ?')">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(users)}">
+                            <td colspan="6" class="text-center">no data</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- pagination -->
+        <div class="row pagination-wrapper mt-3">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- footer -->
+    <div th:replace="admin/fragments/footer :: footer"></div>
+
+    <!-- scripts -->
+    <div th:replace="admin/fragments/scripts :: scripts"></div>
+
+</body>
+</html>

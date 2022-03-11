@@ -74,7 +74,7 @@
         <div class="row post-status my-3">
             <div class="col-md-12">
                 <small>
-                    <a href="" class="text-decoration-none me-2">All (<span th:text="${#lists.size(posts)}"></span>)</a>
+                    <a href="" class="text-decoration-none me-2">All (12)</a>
                     <a href="" class="text-decoration-none me-2">Publish (8)</a>
                     <a href="" class="text-decoration-none me-2">Draft (4)</a>
                     <a href="" class="text-decoration-none me-2">Trash (0)</a>
@@ -89,7 +89,7 @@
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">
-                                <input type="checkbox" name="bulk_action_main" id="">
+                                <input type="checkbox" name="post_bulk_action_main" id="">
                             </th>
                             <th scope="col">
                                 <a th:href="@{/admin/posts/postTitle}">Title</a>
