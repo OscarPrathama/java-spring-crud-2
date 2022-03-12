@@ -1,3 +1,11 @@
+rules
+================
+-> create validation for email version
+-> create validation for password version (maxlength / minlength / letter / upper / symbols)
+-> create validation password & confirm pass
+-> add csrf
+-> create 404, 500 page
+
 thymeleaf
 ================
 https://stackoverflow.com/questions/36663038/spring-thymeleaf-header-and-footer-dynamic-includes
